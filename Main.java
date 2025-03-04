@@ -7,6 +7,7 @@ public class Main {
 
     public static Scanner scanner = new Scanner(System.in);
     private static Random random = new Random();
+    private static Banco banco = new Banco();
 
     public static void main(String[] args) {
         boolean isRunning = true;
@@ -33,8 +34,8 @@ public class Main {
         System.out.println("3 - Sair");
 
         int opcao = scanner.nextInt();
+        scanner.nextLine();
 
-        Banco banco = new Banco();
 
         switch (opcao)
         {
@@ -43,13 +44,13 @@ public class Main {
                 System.out.println("Vamos dar inicio ao processo de cadastro:");
                 System.out.println("Qual o seu nome completo?");
                 String nome = scanner.nextLine();
-                scanner.nextLine();
                 System.out.println();
 
                 System.out.println("Qual o tipo de conta você deseja abrir?");
                 System.out.println("1 - Conta Corrente");
                 System.out.println("2 - Conta Poupança");
                 int tipoConta = scanner.nextInt();
+                scanner.nextLine();
                 System.out.println();
 
                 if (tipoConta == 1)
@@ -70,12 +71,93 @@ public class Main {
 
                 int numeroConta = random.nextInt(1000);
 
+                switch (tipoConta)
+                {
+                    case 1:
+                        ContaCorrente contaCorrente = new ContaCorrente(nome, numeroConta);
+                        banco.abrirConta(contaCorrente);
+                        break;
+                    case 2:
+                        ContaPoupanca contaPoupanca = new ContaPoupanca(nome, numeroConta);
+                        banco.abrirConta(contaPoupanca);
+                        break;
+                }
+                break;
+            case 2:
+                boolean isLogged = false;
+                System.out.println("Digite o número da conta:");
+                int numeroContaLogin = scanner.nextInt();
+                scanner.nextLine();
+                System.out.println("Digite o nome do titular:");
+                String nomeLogin = scanner.nextLine();
 
+                ContaBancaria conta = banco.logar(numeroContaLogin, nomeLogin);
 
-                banco.abrirConta();
+                if (conta != null)
+                {
+                    System.out.println("Login efetuado com sucesso!");
+                    isLogged = true;
+                    // Verificar taxas de manutenção
+                    conta.calcularTaxas();
+                    System.out.println();
+                    do {
+                        System.out.println("\nBem-vindo, " + conta.titular + "!");
+                        System.out.println("O que deseja fazer?");
+                        System.out.println("1 - Depositar");
+                        System.out.println("2 - Sacar");
+                        System.out.println("3 - Consultar saldo");
+                        System.out.println("4 - Aplicar rendimento");
+                        System.out.println("5 - Logout\n");
+
+                        int opcaoConta = scanner.nextInt();
+                        scanner.nextLine();
+
+                        switch (opcaoConta)
+                        {
+                            case 1:
+                                System.out.println("Digite o valor a ser depositado:");
+                                double valorDeposito = scanner.nextDouble();
+                                conta.depositar(valorDeposito);
+                                break;
+                            case 2:
+                                System.out.println("Digite o valor a ser sacado:");
+                                double valorSaque = scanner.nextDouble();
+                                conta.sacar(valorSaque);
+                                break;
+                            case 3:
+                                conta.consultarSaldo();
+                                break;
+                            case 4:
+                                if (conta instanceof ContaPoupanca)
+                                {
+                                    ContaPoupanca contaPoupanca = (ContaPoupanca) conta;
+                                    contaPoupanca.aplicarRendimento();
+                                }
+                                else {
+                                    System.out.println("Essa conta não é uma conta poupança!");
+                                }
+                                break;
+                            case 5:
+                                System.out.println("Deslogando...");
+                                isLogged = false;
+                                break;
+                        }
+                    }while(isLogged);
+                }
+                else
+                {
+                    System.out.println("Login inválido!");
+                }
+                break;
+            case 3:
+                System.out.println("Saindo...");
+                isRunning = false;
+                break;
+            default:
+                System.out.println("Opção inválida!");
+                break;
         }
-
-
+        return isRunning;
 
     }
 

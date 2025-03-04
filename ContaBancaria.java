@@ -1,9 +1,14 @@
 package LuizBank;
 
 public abstract class ContaBancaria {
-    String numeroConta;
+    int numeroConta;
     String titular;
-    double saldo;
+    double saldo = 0;
+
+    public ContaBancaria(int numeroConta, String titular) {
+        this.numeroConta = numeroConta;
+        this.titular = titular;
+    }
 
     // Funções básicas
     public void depositar(double valor) {
@@ -12,6 +17,10 @@ public abstract class ContaBancaria {
     }
 
     public void sacar(double valor) {
+        if (saldo < valor) {
+            System.out.println("Saldo insuficiente para saque");
+            return;
+        }
         System.out.println("O valor " + valor + " foi sacado!");
         saldo -= valor;
     }
