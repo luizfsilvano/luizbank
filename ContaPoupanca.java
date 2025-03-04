@@ -1,7 +1,7 @@
 package LuizBank;
 
 public class ContaPoupanca extends ContaBancaria{
-    private double taxaDeJuros;
+    private final double taxaDeJuros;
 
     // Construtor
     public ContaPoupanca(String titular, int numeroConta) {

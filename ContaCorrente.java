@@ -24,7 +24,6 @@ public class ContaCorrente extends ContaBancaria {
         double valorComTaxa = valor + taxaDeSaque;
         if (saldo < valorComTaxa) {
             System.out.println("Saldo insuficiente para saque");
-            return;
         }
         else {
             System.out.println("Taxa de saque descontada: " + taxaDeSaque);

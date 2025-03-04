@@ -6,8 +6,8 @@ import java.util.Random;
 public class Main {
 
     public static Scanner scanner = new Scanner(System.in);
-    private static Random random = new Random();
-    private static Banco banco = new Banco();
+    private static final Random random = new Random();
+    private static final Banco banco = new Banco();
 
     public static void main(String[] args) {
         boolean isRunning = true;
@@ -18,15 +18,17 @@ public class Main {
 
     public static boolean menu(boolean isRunning) {
         System.out.println("=======================");
-        System.out.println("\n" +
-                "\n" +
-                "   __       _       ___             _    \n" +
-                "  / / _   _(_)____ / __\\ __ _ _ __ | | __\n" +
-                " / / | | | | |_  //__\\/// _` | '_ \\| |/ /\n" +
-                "/ /__| |_| | |/ // \\/  \\ (_| | | | |   < \n" +
-                "\\____/\\__,_|_/___\\_____/\\__,_|_| |_|_|\\_\\\n" +
-                "                                         \n" +
-                "\n");
+        System.out.println("""
+                
+                
+                   __       _       ___             _   \s
+                  / / _   _(_)____ / __\\ __ _ _ __ | | __
+                 / / | | | | |_  //__\\/// _` | '_ \\| |/ /
+                / /__| |_| | |/ // \\/  \\ (_| | | | |   <\s
+                \\____/\\__,_|_/___\\_____/\\__,_|_| |_|_|\\_\\
+                                                        \s
+                
+                """);
         System.out.println("=======================\n");
 
         System.out.println("1 - Abrir conta");
@@ -84,7 +86,7 @@ public class Main {
                 }
                 break;
             case 2:
-                boolean isLogged = false;
+                boolean isLogged;
                 System.out.println("Digite o número da conta:");
                 int numeroContaLogin = scanner.nextInt();
                 scanner.nextLine();
@@ -128,9 +130,8 @@ public class Main {
                                 conta.consultarSaldo();
                                 break;
                             case 4:
-                                if (conta instanceof ContaPoupanca)
+                                if (conta instanceof ContaPoupanca contaPoupanca)
                                 {
-                                    ContaPoupanca contaPoupanca = (ContaPoupanca) conta;
                                     contaPoupanca.aplicarRendimento();
                                 }
                                 else {

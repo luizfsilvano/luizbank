@@ -3,7 +3,7 @@ package LuizBank;
 import java.util.HashMap;
 
 public class Banco {
-    private HashMap<Integer, ContaBancaria> contas = new HashMap<>();
+    private final HashMap<Integer, ContaBancaria> contas = new HashMap<>();
 
     public void abrirConta(ContaBancaria conta) {
         contas.put(conta.numeroConta, conta);
@@ -14,13 +14,13 @@ public class Banco {
         return contas.get(numeroConta);
     }
 
-    public void listarContas() {
-        for (int numeroConta : contas.keySet()) {
-            System.out.println("---------------------");
-            ContaBancaria conta = contas.get(numeroConta);
-            conta.consultarSaldo();
-        }
-    }
+//    public void listarContas() {
+//        for (int numeroConta : contas.keySet()) {
+//            System.out.println("---------------------");
+//            ContaBancaria conta = contas.get(numeroConta);
+//            conta.consultarSaldo();
+//        }
+//    }
 
     public ContaBancaria logar(int numeroConta, String titular) {
 
